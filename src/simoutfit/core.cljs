@@ -10,11 +10,11 @@
 (defui HelloWorld
   Object
   (render [this]
-          (dom/div nil "Hello, world!")))
+          (dom/div nil (get (om/props this) :message))))
 
 (def hello (om/factory HelloWorld))
 
-(js/ReactDOM.render (hello) (gdom/getElement "app"))
+(js/ReactDOM.render (hello {:message "Hello Om"}) (gdom/getElement "app"))
 
 
 (def r (t/reader :json))

@@ -1,12 +1,21 @@
 (ns ^:figwheel-always simoutfit.core
-  (:require [cognitect.transit :as t])
+  (:require [cognitect.transit :as t]
+            [goog.dom :as gdom]
+            [om.next :as om :refer-macros [defui]]
+            [om.dom :as dom])
   (:import [goog.net XhrIo]))
 
 (enable-console-print!)
 
-(println "Edits to this text should show up in your developer console.")
+(defui HelloWorld
+  Object
+  (render [this]
+          (dom/div nil "Hello, world!")))
 
-;; define your app data so that it doesn't get over-written on reload
+(def hello (om/factory HelloWorld))
+
+(js/ReactDOM.render (hello) (gdom/getElement "app"))
+
 
 (def r (t/reader :json))
 
@@ -20,10 +29,6 @@
           (fn [res]
             (println res)
             (println (t/read r res))))
-
-
-
-(defonce app-state (atom {:text "Hello world!!!"}))
 
 
 (defn on-js-reload []

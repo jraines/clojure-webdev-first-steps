@@ -8,6 +8,7 @@
                  [org.clojure/clojurescript "1.7.122"]
                  [compojure "1.4.0"]
                  [http-kit "2.1.19"]
+                 [org.omcljs/om "1.0.0-alpha14"]
                  [com.cognitect/transit-clj "0.8.285"]
                  [com.cognitect/transit-cljs "0.8.225"]
                  [figwheel "0.5.0-SNAPSHOT"]

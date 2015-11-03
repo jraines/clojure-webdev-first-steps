@@ -42,3 +42,22 @@ I skip that first expression by adding the following to a `dev/user.clj` file an
 
 CSS files inside `resources/public/css` will automatically be reloaded.
 You can customize this in the `:figwheel` map of options in the `:cljsbuild` options map in `project.clj`
+
+### Let's fetch some data from a server
+
+Add the following dependencies to `project.clj`
+
+```clojure
+[compojure "1.4.0"]                     ;routing
+[http-kit "2.1.19"]                     ;server 
+[com.cognitect/transit-clj "0.8.285"]   ;transit for clj
+[com.cognitect/transit-cljs "0.8.225"]  ;transit for cljs
+```
+
+We'll use compojure to define the routes our application will respond to and http-kit to be our web server.
+
+Transit is a data format that plays extra nicely with clojure data structures.
+
+In this commit, we set up our server, routes, and add a few helper functions
+for writing & reading transit data.  Finally we use a library from Google Closure to make an ajax request to fetch some data.
+

@@ -9,7 +9,7 @@
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
-            [lein-figwheel "0.4.1"]]
+            [lein-figwheel "0.5.0-SNAPSHOT"]]
 
   :source-paths ["src"]
 

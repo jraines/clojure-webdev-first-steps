@@ -61,3 +61,8 @@ Transit is a data format that plays extra nicely with clojure data structures.
 In this commit, we set up our server, routes, and add a few helper functions
 for writing & reading transit data.  Finally we use a library from Google Closure to make an ajax request to fetch some data.
 
+
+### Om
+
+The next few commits follow the Om quickstart guide
+

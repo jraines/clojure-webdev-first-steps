@@ -7,14 +7,36 @@
 
 (enable-console-print!)
 
+(defonce app-state (atom {:message "Hello Om"}))
+
+(defmulti read (fn [env key params] key))
+
+(defmethod read :default
+  [{:keys [state] :as env} key params]
+  (let [st @state]
+    (if-let [[_ value] (find st key)]
+      {:value value}
+      {:value :not-found})))
+
+
 (defui HelloWorld
+  static om/IQuery
+  (query [this]
+         '[:message])
   Object
   (render [this]
           (dom/div nil (get (om/props this) :message))))
 
-(def hello (om/factory HelloWorld))
 
-(js/ReactDOM.render (hello {:message "Hello Om"}) (gdom/getElement "app"))
+(def reconciler
+  (om/reconciler
+   {:state app-state
+    :parser (om/parser {:read read})}))
+
+(om/add-root! reconciler
+              HelloWorld (gdom/getElement "app"))
+
+
 
 
 (def r (t/reader :json))
@@ -27,8 +49,10 @@
 
 (get-data "/data"
           (fn [res]
-            (println res)
-            (println (t/read r res))))
+            (let [resp (t/read r res)
+                  _ (println resp)
+                  msg (:message resp)]
+              (swap! app-state assoc :message msg))))
 
 
 (defn on-js-reload []

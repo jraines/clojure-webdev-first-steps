@@ -20,7 +20,7 @@
 
 (defroutes app
   (route/resources "/")
-  (GET "/data" [] (transit-response {"message" "Hello World"})))
+  (GET "/data" [] (transit-response {:message "Hello from server"})))
 
 (defn -main []
   (run-server app {:port 5000}))

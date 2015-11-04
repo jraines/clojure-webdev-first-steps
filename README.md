@@ -120,6 +120,25 @@ It has great documentation, so I'll refer you there, and to [this commit](https:
 
 The one thing I missed, due to a lack of understanding about Leiningen & cljsbuild, was that I needed to do `lein figwheel devcards` to start it up, rather than `lein figwheel`, which uses your `:dev` build profile.
 
+#Working with a SQL database
+
+##YesQL
+
+[YesQL](https://github.com/krisajenkins/yesql) is a simple way to use SQL from Clojure, no extra DSL on top of it.  You put your queries in their own `.sql` files, and then generate functions for run them with the `defquery` macro.
+
+This one is pretty straigtforward, so you can go straight from the docs, with two caveats, one borne of my lack of mastery of Leiningen environments and one which I think is an omission from the docs:
+
+1. If you put your query files in `resources`, you don't include that in your reference to the SQL file in `defquery`, because `resources` is part of the Leiningen classpath.
+2. The SQL files must start with a blank line.  -_-
+
+##Ragtime
+
+Coming from Rails, I can't live without database migrations.  [Ragtime](https://github.com/weavejester/ragtime) gives us this ability. I used the suggested [Leiningen integration](https://github.com/weavejester/ragtime/wiki/Leiningen-Integration), and the trickiest thing I found about this, was if I had an error in my SQL, no error would be thrown from `lein migrate`.  The table just wouldn't be there. I need to look into it more and see if you just have to rescue exceptions manually and print something on migration failure.
+
+Also, from the docs: "Note that alphanumeric ordering is used, so if a single migration has more than 9 parts, then start off with 01, 02, etc"
+
+I think I need more exploration in the database area.  I'm not really satisifed with this combo yet, but it's definitely enough to write a simple app backed by a SQL database. I have a feeling I'm going to miss ActiveRecord, though, for all the shit it gets in the Ruby community.
+
 
 
 

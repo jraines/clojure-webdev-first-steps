@@ -16,6 +16,9 @@
                  [com.cognitect/transit-cljs "0.8.225"]
                  [figwheel "0.5.0-SNAPSHOT"]
                  [devcards "0.2.0-8"]
+                 [yesql "0.5.1"]
+                 [ragtime "0.5.2"]
+                 [org.xerial/sqlite-jdbc "3.7.2"]
                  [figwheel-sidecar "0.5.0-SNAPSHOT"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]]
 
@@ -23,6 +26,9 @@
             [lein-figwheel "0.5.0-SNAPSHOT"]]
 
   :source-paths ["src" "dev"]
+
+  :aliases {"migrate"  ["run" "-m" "user/migrate"]
+            "rollback" ["run" "-m" "user/rollback"]}
 
   :profiles {:repl {:dependencies [[org.clojure/tools.nrepl "0.2.12"]]}
              :dev  {:dependencies [[com.cemerick/piggieback "0.2.1"]

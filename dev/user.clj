@@ -1,5 +1,20 @@
 (ns user
-  (:require [figwheel-sidecar.repl-api :refer [cljs-repl]]))
+  (:require [figwheel-sidecar.repl-api :refer [cljs-repl]]
+            [ragtime.jdbc :as jdbc]
+            [ragtime.repl :as rtr]))
+
+(defn load-config []
+  {:datastore  (jdbc/sql-database "jdbc:sqlite:db/demo.sqlite")
+   :migrations (jdbc/load-resources "migrations")})
+
+(defn migrate []
+  (println "migrating")
+  (rtr/migrate (load-config)))
+
+(defn rollback []
+  (println "rolling back last migration")
+  (rtr/rollback (load-config)))
+
 ;; (ns user
 ;;   (:require [com.stuartsierra.component :as component]
 ;;             [figwheel-sidecar.system :as sys]))

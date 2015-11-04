@@ -1,4 +1,4 @@
-# simoutfit
+# Gentle Intro to Web Development in Clojure with Om (Next)
 
 ## Starting
 
@@ -66,3 +66,17 @@ for writing & reading transit data.  Finally we use a library from Google Closur
 
 The next few commits follow the Om quickstart guide
 
+- component
+- parameterized component
+
+Now let's let Om manage our state between client and server instead of handling that ourselves with explicit ajax requests and `swap!`ing the `app-state`.
+
+We'll need to provide a function to the `:send` key of the reconciler's parameter map.  This will be a function which takes two parameters:  the EDN of the query expression fragment that will be passed to the server, and a callback to handle the response. In this case, our function closes over the single remote URL we'll be sending to on the server.  Notice that what we *don't* have to do in the callback is update our app-state:  Om handles it.
+
+On the server, we have a similar `om/parser` function which takes the app state and a `:read` function.
+
+In the request handler, we respond with a transit-encoded result of parsing the state and the query expression fragment that was sent, which is nested in the `:remote` key of the transit encoded params (these are decoded for us by ring-transit).  This is where using transit pays off -- we can pass this piece ofthe request directly into the parser.
+
+In the case of `:description`, the value is sent back to the server, but since there is no `:sender` key in the app state on the server, we send back `:not-found` and let the client handle that.
+
+I also added `ring-reload` so I didn't have to restart the server on each change.

@@ -16,43 +16,47 @@
   (let [st @state]
     (if-let [[_ value] (find st key)]
       {:value value}
-      {:value :not-found})))
+      {:remote true})))
 
 
 (defui HelloWorld
   static om/IQuery
   (query [this]
-         '[:message])
+         '[:message :description :sender])
   Object
   (render [this]
-          (dom/div nil (get (om/props this) :message))))
+          (let [props (om/props this)
+                msg (:message props)
+                desc (:description props)
+                sender (if-not (= (:sender props) :not-found)
+                         (:sender props)
+                         "Unknown")]
+            (dom/div nil (str msg ": " desc " -- " sender)))))
+
+
+(defn transit-post [url]
+  (fn [edn cb]
+    (println edn)
+    (.send XhrIo url
+           (fn [e]
+             (this-as this
+                      (println (t/read (t/reader :json)
+                                       (.getResponseText this)))
+                      (cb (t/read (t/reader :json) (.getResponseText this)))))
+           "POST" (t/write (t/writer :json) edn)
+           #js {"Content-Type" "application/transit+json"})))
+
 
 
 (def reconciler
   (om/reconciler
    {:state app-state
-    :parser (om/parser {:read read})}))
+    :parser (om/parser {:read read})
+    :send (transit-post "/api")}))
 
 (om/add-root! reconciler
               HelloWorld (gdom/getElement "app"))
 
-
-
-
-(def r (t/reader :json))
-
-(defn get-data [url cb]
-  (XhrIo.send url
-              (fn [e]
-                (let [xhr (.-target e)]
-                  (cb (.getResponseText xhr))))))
-
-(get-data "/data"
-          (fn [res]
-            (let [resp (t/read r res)
-                  _ (println resp)
-                  msg (:message resp)]
-              (swap! app-state assoc :message msg))))
 
 
 (defn on-js-reload []

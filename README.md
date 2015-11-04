@@ -108,7 +108,7 @@ In the case of `:description`, the value is sent back to the server, but since t
 
 I also added `ring-reload` so I didn't have to restart the server on each change.
 
-[Here's the commit for the above setup]()
+[Here's the commit for the above setup](https://github.com/jraines/gentle-om-next/commit/9e92e22307db3e3086a7b5404b78424625ad6407)
 
 ##Devcards
 

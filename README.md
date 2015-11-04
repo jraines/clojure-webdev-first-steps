@@ -84,10 +84,12 @@ Finally we use [a library](https://github.com/jraines/gentle-om-next/commit/8e70
 
 ## Om
 
-The next few commits follow the Om Next quickstart guide, so I won't dwell much on them. I really only want to spend time on the piece of Om that I found confusing -- the "boring" mechanics of setting up client / server sync.  It's actually quite easy, just not currently well documented in my opinion (note:  as of this writing, the version of Om I'm talking about is currently called Om Next, and is in alpha status, and thus so is this part of the guide).
+The next few commits follow the [Om Next quickstart guide](https://github.com/omcljs/om/wiki/Quick-Start-(om.next)), so I won't dwell much on them. (In fact, if this is your first time checking out Om, you should definitely go there first -- I really only want to spend time on the piece of Om that I found confusing -- the "boring" mechanics of setting up client / server sync.  It's actually quite easy, just not currently well documented, in my opinion. *Note:  as of this writing, the version of Om I'm talking about is currently called Om Next, and is in alpha status, and thus so is this part of the guide*).
 
 [First we'll add Om as a dependency and make a basic component.](https://github.com/jraines/gentle-om-next/commit/ab0150afafdfe3b305270d6a8e8977f7fedf8985)
+
 [Then, let's make it accept props as parameters.](https://github.com/jraines/gentle-om-next/commit/39be499a06b89698fe2048f4f8dcfc905a0b4400)
+
 [Next, let's set up our read function, parser, and reconciler, and grab data from the server](https://github.com/jraines/gentle-om-next/commit/f44d51670c992fbfc909b324e5541e4b68e991da)
 
 At this point you should see that your component:
@@ -102,7 +104,7 @@ We'll need to provide a function to the `:send` key of the reconciler's paramete
 
 On the server, we have a similar `om/parser` function which takes the app state and a `:read` function.
 
-In the request handler, we respond with a transit-encoded result of parsing the state and the query expression fragment that was sent, which is nested in the `:remote` key of the transit encoded params (these are decoded for us by ring-transit).  This is where using transit pays off -- we can pass this piece ofthe request directly into the parser.
+In the request handler, we respond with a transit-encoded result of parsing the state and the query expression fragment that was sent, which is nested in the `:remote` key of the transit encoded params (these are decoded for us by ring-transit).  This is where using transit pays off -- we can pass this piece of the request directly into the parser function (note - this is the function *created* by `om/parser` as parameterized with your read (and mutate, which I don't cover here) functions).
 
 In the case of `:description`, the value is sent back to the server, but since there is no `:sender` key in the app state on the server, we send back `:not-found` and let the client handle that.
 
@@ -111,4 +113,7 @@ I also added `ring-reload` so I didn't have to restart the server on each change
 [Here's the commit for the above setup](https://github.com/jraines/gentle-om-next/commit/9e92e22307db3e3086a7b5404b78424625ad6407)
 
 ##Devcards
+
+Devcards is a tool that allows for interactive development of UI components in isolations. You can view them at different states at the same time, compare different edge cases (long text, blank values, etc) without constantly having to replicate that in your main app.  It has a host of other capabilities as well, but we'll just cover the basic setup.
+
 

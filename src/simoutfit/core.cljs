@@ -33,6 +33,7 @@
                          "Unknown")]
             (dom/div nil (str msg ": " desc " -- " sender)))))
 
+(def hello (om/factory HelloWorld))
 
 (defn transit-post [url]
   (fn [edn cb]

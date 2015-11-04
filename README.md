@@ -114,6 +114,12 @@ I also added `ring-reload` so I didn't have to restart the server on each change
 
 ##Devcards
 
-Devcards is a tool that allows for interactive development of UI components in isolations. You can view them at different states at the same time, compare different edge cases (long text, blank values, etc) without constantly having to replicate that in your main app.  It has a host of other capabilities as well, but we'll just cover the basic setup.
+[Devcards](https://github.com/bhauman/devcards) is a tool that allows for interactive development of UI components in isolations. You can view them at different states at the same time, compare different edge cases (long text, blank values, etc) without constantly having to replicate that in your main app.  It has a host of other capabilities as well.
+
+It has great documentation, so I'll refer you there, and to this commit that got me set up in the most basic way.  Note that to get real benefits, you'll need to do some setup and/or mocking of your Om parsers, reconciler, and possibly server so you can test your components in all their states.
+
+The one thing I missed, due to a lack of understanding about Leiningen & cljsbuild, was that I needed to do `lein figwheel devcards` to start it up, rather than `lein figwheel`, which uses your `:dev` build profile.
+
+
 
 

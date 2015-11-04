@@ -15,6 +15,7 @@
                  [com.cognitect/transit-clj "0.8.285"]
                  [com.cognitect/transit-cljs "0.8.225"]
                  [figwheel "0.5.0-SNAPSHOT"]
+                 [devcards "0.2.0-8"]
                  [figwheel-sidecar "0.5.0-SNAPSHOT"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]]
 
@@ -46,7 +47,15 @@
               :compiler {:output-to "resources/public/js/compiled/simoutfit.js"
                          :main simoutfit.core
                          :optimizations :advanced
-                         :pretty-print false}}]}
+                         :pretty-print false}}
+             {:id "devcards"
+              :source-paths ["src"]
+              :figwheel { :devcards true } ;; <- note this
+              :compiler { :main    simoutfit.cards
+                         :asset-path "js/compiled/devcards_out"
+                         :output-to  "resources/public/js/compiled/simoutfit_devcards.js"
+                         :output-dir "resources/public/js/compiled/devcards_out"
+                         :source-map-timestamp true }}]}
 
   :figwheel {
              ;; :http-server-root "public" ;; default and assumes "resources" 

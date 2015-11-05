@@ -1,0 +1,2 @@
+[droplets]
+sandbox ansible_ssh_host=159.203.136.22

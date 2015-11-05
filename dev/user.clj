@@ -4,7 +4,8 @@
             [ragtime.repl :as rtr]))
 
 (defn load-config []
-  {:datastore  (jdbc/sql-database "jdbc:sqlite:db/demo.sqlite")
+  {:datastore  (jdbc/sql-database (str "jdbc:postgresql://localhost:5432/myapp?password="
+                                       (System/getenv "SIMOUTFIT_DB_PWD")))
    :migrations (jdbc/load-resources "migrations")})
 
 (defn migrate []

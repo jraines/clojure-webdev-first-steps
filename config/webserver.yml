@@ -1,0 +1,12 @@
+---
+
+- name: Set up app server
+  hosts: droplets
+  sudo: yes
+  roles:
+    - common
+    - postgres_installed
+    - java
+    - lein
+
+

@@ -18,7 +18,7 @@
                  [devcards "0.2.0-8"]
                  [yesql "0.5.1"]
                  [ragtime "0.5.2"]
-                 [org.xerial/sqlite-jdbc "3.7.2"]
+                 [org.postgresql/postgresql "9.4-1201-jdbc41"]
                  [figwheel-sidecar "0.5.0-SNAPSHOT"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]]
 
@@ -32,7 +32,9 @@
 
   :profiles {:repl {:dependencies [[org.clojure/tools.nrepl "0.2.12"]]}
              :dev  {:dependencies [[com.cemerick/piggieback "0.2.1"]
-                                   [org.clojure/tools.nrepl "0.2.12"]]
+                                   [org.clojure/tools.nrepl "0.2.12"]
+                                   ]
+                    :plugins [[mvxcvi/whidbey "1.3.0"]]
                     :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}}}
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
@@ -42,6 +44,8 @@
               :source-paths ["src"]
 
               :figwheel { :on-jsload "simoutfit.core/on-js-reload" }
+
+              :compiler-env {:print cljs.pprint/pprint}
 
               :compiler {:main simoutfit.core
                          :asset-path "js/compiled/out"

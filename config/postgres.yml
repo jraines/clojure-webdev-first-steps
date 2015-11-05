@@ -1,0 +1,8 @@
+---
+
+- name: Set up postgres db & user
+  hosts: droplets
+  sudo: yes
+  sudo_user: postgres
+  roles:
+    - postgres

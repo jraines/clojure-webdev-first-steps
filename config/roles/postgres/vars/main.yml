@@ -1,0 +1,4 @@
+---
+dbname: myapp
+dbuser: myappuser
+dbpassword: "{{ lookup('env','SIMOUTFIT_DB_PWD') }}"

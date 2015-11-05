@@ -1,0 +1,5 @@
+---
+
+- include: webserver.yml
+- include: postgres.yml
+- include: deploy.yml

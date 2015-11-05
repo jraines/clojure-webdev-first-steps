@@ -1,0 +1,7 @@
+---
+
+- name: pull & start the app
+  hosts: droplets
+  sudo: yes
+  roles:
+    - ship

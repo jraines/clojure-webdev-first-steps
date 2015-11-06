@@ -1,0 +1,7 @@
+---
+
+- name: create uberjar
+  sudo_user: app
+  command: lein uberjar
+  args:
+    chdir: /home/app/simoutfit

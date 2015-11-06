@@ -145,6 +145,7 @@ I think I need more exploration in the database area.  I'm not really satisifed 
 
 apt-get install python-simplejson
 psql myapp -U myappuser -h 127.0.0.1 --password
+http://docs.ansible.com/ansible/playbooks_best_practices.html#task-and-handler-organization-for-a-role
 
 https://semaphoreci.com/community/tutorials/how-to-set-up-a-clojure-environment-with-ansible
 

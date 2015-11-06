@@ -9,11 +9,12 @@
             [org.httpkit.server :refer [run-server]])
   (:import [java.io ByteArrayOutputStream]))
 
-(if (= (env :environment) "dev")
-  (require '[ring.middleware.reload :refer [wrap-reload]]))
+(defn env-setup []
+  (if (= (env :environment) "dev")
+    (require '[ring.middleware.reload :refer [wrap-reload]])
+    (def wrap-reload nil)))
 
-(if (= (env :environment) "dev")
-  (defn wrap-reload [req] false))
+(env-setup)
 
 (defn write [x]
   (let [baos (ByteArrayOutputStream.)

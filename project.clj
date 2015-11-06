@@ -5,13 +5,13 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.122"]
+                 [org.clojure/clojurescript "1.7.170"]
                  [compojure "1.4.0"]
                  [http-kit "2.1.19"]
                  [ring/ring-core "1.4.0"]
                  [environ "1.0.1"]
                  [ring-transit "0.1.4"]
-                 [org.omcljs/om "1.0.0-alpha14"]
+                 [org.omcljs/om "1.0.0-alpha17"]
                  [com.cognitect/transit-clj "0.8.285"]
                  [com.cognitect/transit-cljs "0.8.225"]
                  [yesql "0.5.1"]
@@ -20,7 +20,7 @@
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]]
 
   :plugins [[lein-environ "1.0.1"]
-            [lein-cljsbuild "1.1.0"]
+            [lein-cljsbuild "1.1.1-SNAPSHOT"]
             [lein-figwheel "0.5.0-SNAPSHOT"]]
 
   :source-paths ["src" "dev"]
@@ -42,20 +42,12 @@
 
              :uberjar {
                        ;this runs the first entry in the cljsbuils :builds map below
-                       :prep-tasks ["compile" ["cljsbuild" "once"]]
+                       :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
                        :env {:environment "production"}
                        :main simoutfit.server
                        :aot :all
                        :source-paths ["src"]
                        :omit-source true
-                       ;:cljsbuild {
-                                   ;:builds [{:source-paths ["src"]
-                                             ;:compiler {:output-to "resources/public/js/compiled/simoutfit.js"
-                                                        ;:main simoutfit.core
-                                                        ;:jar true
-                                                        ;:optimizations :advanced
-                                                        ;:pretty-print false} }]
-                                   ;}
                        }}
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]

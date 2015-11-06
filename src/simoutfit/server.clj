@@ -1,12 +1,19 @@
 (ns simoutfit.server
+  (:gen-class)
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
             [ring.middleware.transit :refer [wrap-transit-params]]
-            [ring.middleware.reload :refer [wrap-reload]]
             [cognitect.transit :as t]
+            [environ.core :refer [env]]
             [om.next.server :as om]
             [org.httpkit.server :refer [run-server]])
   (:import [java.io ByteArrayOutputStream]))
+
+(if (= (env :environment) "dev")
+  (require '[ring.middleware.reload :refer [wrap-reload]]))
+
+(if (= (env :environment) "dev")
+  (defn wrap-reload [req] false))
 
 (defn write [x]
   (let [baos (ByteArrayOutputStream.)
@@ -46,9 +53,19 @@
   (route/resources "/")
   (POST "/api" params api))
 
-(defn -main []
+(defn start-dev-server []
   (run-server (-> app
                   wrap-transit-params
                   wrap-reload)
               {:port 5000}))
+
+(defn start-prod-server []
+  (run-server (-> app
+                  wrap-transit-params)
+              {:port 5000}))
+
+(defn -main []
+  (if (= (env :environment) "dev")
+    (start-dev-server)
+    (start-prod-server)))
 

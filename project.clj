@@ -45,8 +45,6 @@
 
               :figwheel { :on-jsload "simoutfit.core/on-js-reload" }
 
-              :compiler-env {:print cljs.pprint/pprint}
-
               :compiler {:main simoutfit.core
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/simoutfit.js"

@@ -2,14 +2,23 @@
 
 - name: app user exists
   user: name=app
+        group=sudo
+
+- name: make sure app user owns their ~/.lein
+  file: path=/home/app/.lein
+        owner=app
+        recurse=yes
 
 - name: app directory exists
   file: path=/home/app/simoutfit
         state=directory
+        owner=app
+        recurse=yes
 
 - name: create ssh folder
   file: path=/home/app/.ssh
         state=directory
+        owner=app
 
 - name: copy gh key
   copy: src=github_keys/id_rsa
@@ -22,8 +31,11 @@
        accept_hostkey=true
        key_file=/home/app/.ssh/gh_key
 
+
 - name: migrate db
   sudo_user: app
+  environment:
+    SIMOUTFIT_DB_PWD: "{{ lookup('env','SIMOUTFIT_DB_PWD') }}"
   command: lein migrate
   args:
     chdir: /home/app/simoutfit

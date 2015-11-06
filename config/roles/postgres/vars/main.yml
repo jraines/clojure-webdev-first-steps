@@ -1,4 +1,5 @@
 ---
 dbname: myapp
-dbuser: myappuser
+#this should match the Linux user that will run migrations, etc.
+dbuser: app
 dbpassword: "{{ lookup('env','SIMOUTFIT_DB_PWD') }}"

@@ -13,3 +13,4 @@ pom.xml
 .nrepl-port
 *.sqlite
 id_rsa
+.lein-env

@@ -143,10 +143,44 @@ I think I need more exploration in the database area.  I'm not really satisifed 
 
 #Deploying to a VPS with Ansible
 
-apt-get install python-simplejson
-psql myapp -U myappuser -h 127.0.0.1 --password
+The goal is to have a one line task that will package up our app, provision a server with everything it needs, prep our database, and run our app using `java -jar /path/to/jar`
+
+## Building the uberjar
+
+You'll want to ensure that your development dependencies don't get shipped with your production app.  I found the [environ](https://github.com/weavejester/environ) tool useful for this, and also shuffled a few dependencies from the main list in `project.clj` to specific `:profiles` sections.
+
+(I had to do a [bit of hackery](https://github.com/jraines/gentle-om-next/commit/ea94287bb9acf6057273ae6db5c58ac6d06cb4b2#diff-59ac2781f662f112526300f4a4719b87R12) to ensure my project could be built for production without its development dependencies, despite the fact that references to development-only functions were contained in `defn`'d fuctions that wouldn't be called in production mode. Would love feedback on the right way to handle this.
+
+In your main class that will run your server, add `(:gen-class)`
+
+In the `:uberjar` profile in `project.clj`, this line will ensure that your production js gets included:
+
+```clojure
+ :prep-tasks ["compile" ["cljsbuild" "once" "min"]]
+```
+
+See [this discussion](https://github.com/emezeske/lein-cljsbuild/issues/366#issuecomment-134230350) for using this method over the Leiningen hook for cljsbuild.
+
+Issue: I see multiple "Compiling [ns]..." outputs for each namespace, despite no circular dependencies.  I'm not sure if this is a sign of something wrong, but everything seems to work.
+
+## Provisioning with Ansible
+
+I did this on a DigitalOcean VPS running Ubuntu 15.10.  There will be differnces compared to older Ubuntu versions.
+
+One particular one is that Ansible expects Python 2.x, and Ubuntu 15.10 ships with Python 3 as its default.  So step 0 is to log into the server and run: 
+`apt-get install python-simplejson`
+
+Now you can create an Ansible playbook to provision the server.  This is beyond the scope of this README for the most part, but here's a few notes just of what I learned. (TODO - still in progress)
+
+I also wrote about doing so [in this blog post](http://jeremyraines.com/2014/09/13/deploying-a-microservice-with-ansible.html).
+
+Need to check in on the db?
+`psql myapp -U myappuser -h 127.0.0.1 --password`
+
+Organization of ansible roles
 http://docs.ansible.com/ansible/playbooks_best_practices.html#task-and-handler-organization-for-a-role
 
+Some helpful steps for setting java & lein with Ansible
 https://semaphoreci.com/community/tutorials/how-to-set-up-a-clojure-environment-with-ansible
 
 

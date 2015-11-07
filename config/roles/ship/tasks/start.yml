@@ -1,0 +1,14 @@
+- name: ensure systemd config is in place
+  #move to variable
+  copy: src=simoutfit.service
+        dest=/etc/systemd/system/simoutfit.service
+
+- name: ensure the service is enabled
+  service:
+    name=simoutfit
+    enabled=yes
+
+- name: start the app
+  service:
+    name=simoutfit
+    state=restarted

@@ -39,3 +39,5 @@
   command: lein migrate
   args:
     chdir: /home/app/simoutfit
+
+

@@ -1,0 +1,7 @@
+[Unit]
+Description=SimOutfitJar
+
+[Service]
+ExecStart=/usr/bin/java -jar /home/app/simoutfit/target/simoutfit-0.1.0-SNAPSHOT-standalone.jar
+Restart=always
+

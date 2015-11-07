@@ -2,3 +2,4 @@
 
 - include: prepare.yml
 - include: package.yml
+- include: start.yml

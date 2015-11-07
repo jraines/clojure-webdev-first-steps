@@ -1,3 +1,19 @@
+- name: vhost in sites-available
+  copy: src=simoutfit-vhost.conf
+        dest=/etc/nginx/sites-available/simoutfit-vhost.conf
+
+- name: vhost in sites-enabled
+  copy: src=simoutfit-vhost.conf
+        dest=/etc/nginx/sites-enabled/simoutfit-vhost.conf
+  notify: restart nginx
+
+- name: nginx default removed
+  sudo: yes
+  file:
+    path=/etc/nginx/sites-enabled/default
+    state=absent
+  notify: restart nginx
+
 - name: ensure systemd config is in place
   #move to variable
   copy: src=simoutfit.service

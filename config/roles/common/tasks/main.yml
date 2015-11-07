@@ -11,6 +11,7 @@
     - logrotate
     - nginx
     - git-core
+    - vim-nox
 
 - name: be sure tlsdate is running
   service: name=tlsdate state=running

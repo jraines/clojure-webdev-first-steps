@@ -20,7 +20,7 @@
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]]
 
   :plugins [[lein-environ "1.0.1"]
-            [lein-cljsbuild "1.1.1-SNAPSHOT"]
+            [lein-cljsbuild "1.1.1"]
             [lein-figwheel "0.5.0-SNAPSHOT"]]
 
   :source-paths ["src" "dev"]
